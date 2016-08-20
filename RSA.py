@@ -6,9 +6,14 @@ from pickle import dump, load
 
 
 def generate_RSA_credentials(bit_length, strong=True, fast=True):
+    #  fast: uses common public exponent with almost all bits equals to zero
+    #  strong: uses sen jermen type of prime numbers
+    
     get_prime = generate_sen_jermen_prime if strong else generate_prime
 
     credentials = {"secret_key": {}, "shared_key": {}}
+
+    #  there is no guarantee that length of generated shared_key always would equal to bit_length
     p, q = get_prime(bit_length/2), get_prime(bit_length/2)
     n = p*q
 
